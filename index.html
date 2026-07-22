@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Post Label Generator</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- html2canvas and JsBarcode -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1><i class="fa-solid fa-shipping-fast"></i> Label Generator</h1>
+            <p>Generate custom shipping labels easily</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Form Section -->
+            <section class="form-section">
+                <div class="card form-card">
+                    <h2><i class="fa-solid fa-pen-to-square"></i> Sender Details (From)</h2>
+                    <div class="form-group">
+                        <label>Company/Name</label>
+                        <input type="text" id="senderName" value="SHREEJA DIVINE PRODUCTS" oninput="updateLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="senderAddress" rows="3" oninput="updateLabel()">229 Skyview business horizon&#10;Near Swaminaryan Parking,&#10;Sarthana to Kamrej Road,&#10;Sarthana, surat - 395006</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="text" id="senderMobile" value="7984115219" oninput="updateLabel()">
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h2><i class="fa-solid fa-user-tag"></i> Recipient Details (To)</h2>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="recipientName" value="Deepak" oninput="updateLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Company/Department</label>
+                        <input type="text" id="recipientCompany" value="Office of Airport director , Deepak Singh" oninput="updateLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="recipientAddress" rows="3" oninput="updateLabel()">Agatti Airport, Agatti, Lakshadweep&#10;AGATTI, LAKSHADWEEP 682553</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="recipientPhone" value="7022111529" oninput="updateLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Tracking Barcode Value</label>
+                        <input type="text" id="barcodeValue" value="AWB123456789IN" oninput="updateLabel()">
+                    </div>
+
+                    <button class="btn-primary" onclick="downloadImage()">
+                        <i class="fa-solid fa-download"></i> Download Label
+                    </button>
+                </div>
+            </section>
+
+            <!-- Preview Section -->
+            <section class="preview-section">
+                <div class="preview-header">
+                    <h2>Live Preview</h2>
+                    <span class="badge">Auto-updates</span>
+                </div>
+                <div class="preview-container">
+                    <!-- The Label -->
+                    <div id="labelPreview" class="label-wrapper">
+                        <!-- Top Header -->
+                        <div class="label-top">
+                            <div class="top-icon">
+                                <i class="fa-solid fa-box-open"></i>
+                                <div class="motion-lines">
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+                            <div class="top-title">
+                                FROM <i class="fa-solid fa-arrow-right-long"></i> TO
+                            </div>
+                            <div class="top-logo">
+                                <div class="india-post-logo">
+                                    <div class="hindi-text">भारतीय डाक</div>
+                                    <div class="logo-box">
+                                        <div class="yellow-wings"></div>
+                                    </div>
+                                    <div class="english-text">India Post</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="label-body">
+                            <!-- Left: Sender -->
+                            <div class="label-col left-col">
+                                <div class="col-header sender-header">
+                                    <i class="fa-solid fa-user"></i> FROM (SENDER)
+                                </div>
+                                <div class="col-content">
+                                    <div class="info-row">
+                                        <i class="fa-solid fa-building"></i>
+                                        <strong id="lblSenderName" class="large-text">SHREEJA DIVINE PRODUCTS</strong>
+                                    </div>
+                                    <div class="dotted-divider"></div>
+                                    <div class="info-row">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span id="lblSenderAddress"></span>
+                                    </div>
+                                    <div class="dotted-divider"></div>
+                                    <div class="info-row">
+                                        <i class="fa-solid fa-phone"></i>
+                                        <span>From Sender mobile number : <strong id="lblSenderMobile">7984115219</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Recipient -->
+                            <div class="label-col right-col">
+                                <div class="col-header recipient-header">
+                                    <i class="fa-solid fa-user"></i> TO (RECIPIENT)
+                                </div>
+                                <div class="col-content">
+                                    <div class="info-row">
+                                        <i class="fa-solid fa-user"></i>
+                                        <strong id="lblRecipientName" class="large-text">Deepak</strong>
+                                    </div>
+                                    <div class="dotted-divider"></div>
+                                    <div class="info-row">
+                                        <i class="fa-solid fa-building"></i>
+                                        <span id="lblRecipientCompany" class="large-text">Office of Airport director , Deepak Singh</span>
+                                    </div>
+                                    <div class="dotted-divider"></div>
+                                    <div class="info-row">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span id="lblRecipientAddress"></span>
+                                    </div>
+                                    <div class="dotted-divider"></div>
+                                    <div class="info-row">
+                                        <i class="fa-solid fa-phone"></i>
+                                        <span>Phone: &nbsp;&nbsp;<strong id="lblRecipientPhone">7022111529</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Section -->
+                        <div class="label-bottom">
+                            <div class="bottom-left">
+                                <svg id="barcode"></svg>
+                            </div>
+                            <div class="bottom-middle">
+                                <div class="handle-care-title">HANDLE WITH CARE</div>
+                                <div class="symbols">
+                                    <div class="symbol-box"><i class="fa-solid fa-hands-holding-circle"></i></div>
+                                    <div class="symbol-box"><i class="fa-solid fa-umbrella"></i></div>
+                                    <div class="symbol-box"><i class="fa-solid fa-arrows-up-to-line"></i></div>
+                                </div>
+                            </div>
+                            <div class="bottom-right">
+                                <div class="thank-you">THANK YOU</div>
+                                <div class="deliver-safely">PLEASE DELIVER SAFELY</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
