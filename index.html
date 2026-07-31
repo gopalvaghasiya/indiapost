@@ -20,12 +20,17 @@
         <header class="app-header">
             <h1><i class="fa-solid fa-shipping-fast"></i> Label Generator</h1>
             <p>Generate custom shipping labels easily</p>
+            <div class="tabs">
+                <button class="tab-btn active" id="tab-btn-domestic" onclick="switchTab('domestic')">Domestic Label</button>
+                <button class="tab-btn" id="tab-btn-international" onclick="switchTab('international')">International Label</button>
+            </div>
         </header>
 
         <main class="main-content">
             <!-- Form Section -->
             <section class="form-section">
-                <div class="card form-card">
+                <!-- ================= DOMESTIC FORM ================= -->
+                <div class="card form-card" id="form-domestic">
                     <h2><i class="fa-solid fa-pen-to-square"></i> Sender Details (From)</h2>
                     <div class="form-group">
                         <label>Company/Name</label>
@@ -68,6 +73,107 @@
                         <i class="fa-solid fa-download"></i> Download Label
                     </button>
                 </div>
+
+                <!-- ================= INTERNATIONAL FORM ================= -->
+                <div class="card form-card" id="form-international" style="display: none;">
+                    <h2><i class="fa-solid fa-globe"></i> Int. Sender Details</h2>
+                    <div class="form-group">
+                        <label>Company/Name</label>
+                        <input type="text" id="intSenderName" value="SHREEJA DIVINE PRODUCTS" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Sub Name</label>
+                        <input type="text" id="intSenderSub" value="Solanki Vishalbhai Arvindbhai" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="intSenderAddress" rows="4" oninput="updateIntLabel()">459 Riddhi Siddhi Residency,&#10;Near ABC Mall, Canal Road,&#10;Kamrej, Surat - 394180&#10;Gujarat, India</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="intSenderPhone" value="+91-7878447897" oninput="updateIntLabel()">
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h2><i class="fa-solid fa-user-tag"></i> Int. Recipient Details</h2>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="intRecipientName" value="Henrik Boddum" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="intRecipientAddress" rows="3" oninput="updateIntLabel()">Vinkelvej 1a&#10;9370 HALS&#10;Denmark</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        <input type="text" id="intRecipientMobile" value="+45 23 71 65 12" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" id="intRecipientEmail" value="boddum@me.com" oninput="updateIntLabel()">
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h2><i class="fa-solid fa-box"></i> Product Details</h2>
+                    <div class="form-group">
+                        <label>Description of Goods</label>
+                        <textarea id="intProdDesc" rows="4" oninput="updateIntLabel()">Mixed Fragrance Agarbatti&#10;(Incense Sticks)&#10;Sandalwood, Rose, Mogra & Lavender&#10;Meditation Prayer&#10;Aromatherapy Incense</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>HSN Code</label>
+                        <input type="text" id="intProdHSN" value="33074100&#10;(Incense Stick)" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>QTY</label>
+                        <input type="text" id="intProdQty" value="1 Pack" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Unit Value</label>
+                        <input type="text" id="intProdUnit" value="EUR 38.91" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Value</label>
+                        <input type="text" id="intProdTotal" value="EUR 38.91" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Country of Origin</label>
+                        <input type="text" id="intProdOrigin" value="India" oninput="updateIntLabel()">
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h2><i class="fa-solid fa-file-invoice-dollar"></i> Custom Details</h2>
+                    <div class="form-group">
+                        <label>IOSS Number</label>
+                        <input type="text" id="intIoss" value="IM3720000224" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>VAT Message</label>
+                        <textarea id="intVatMsg" rows="2" oninput="updateIntLabel()">VAT has already been collected by Etsy.&#10;No VAT to be collected from the buyer.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <input type="text" id="intCurrency" value="EUR" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Net Weight</label>
+                        <input type="text" id="intWeight" value="Approx. 622 G" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Order No</label>
+                        <input type="text" id="intOrderNo" value="4100569160" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Tracking Barcode</label>
+                        <input type="text" id="intBarcodeValue" value="4100569160" oninput="updateIntLabel()">
+                    </div>
+
+                    <button class="btn-primary" onclick="downloadImage()">
+                        <i class="fa-solid fa-download"></i> Download Label
+                    </button>
+                </div>
             </section>
 
             <!-- Preview Section -->
@@ -76,9 +182,10 @@
                     <h2>Live Preview</h2>
                     <span class="badge">Auto-updates</span>
                 </div>
-                <div class="preview-container">
-                    <!-- The Label -->
-                    <div id="labelPreview" class="label-wrapper">
+                <div class="preview-container" id="preview-container">
+                    
+                    <!-- ================= DOMESTIC LABEL ================= -->
+                    <div id="labelPreview-domestic" class="label-wrapper active-label">
                         <!-- Top Header -->
                         <div class="label-top">
                             <div class="top-icon">
@@ -158,7 +265,7 @@
                         <!-- Footer Section -->
                         <div class="label-bottom">
                             <div class="bottom-left">
-                                <svg id="barcode"></svg>
+                                <svg id="barcode-domestic"></svg>
                             </div>
                             <div class="bottom-middle">
                                 <div class="handle-care-title">HANDLE WITH CARE</div>
@@ -174,6 +281,97 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- ================= INTERNATIONAL LABEL ================= -->
+                    <div id="labelPreview-international" class="int-label-wrapper" style="display: none;">
+                        
+                        <!-- Top: Addresses -->
+                        <div class="int-top">
+                            <div class="int-left">
+                                <div class="int-header">FROM:</div>
+                                <div id="lblIntSenderName" class="int-large-text">SHREEJA DIVINE PRODUCTS</div>
+                                <div id="lblIntSenderSub" class="int-bold-text">Solanki Vishalbhai Arvindbhai</div>
+                                <div id="lblIntSenderAddress" class="int-text-block"></div>
+                                <div class="int-phone-text">Phone: <span id="lblIntSenderPhone"></span></div>
+                            </div>
+                            <div class="int-right">
+                                <div class="int-header">TO:</div>
+                                <div id="lblIntRecipientName" class="int-large-text">Henrik Boddum</div>
+                                <div id="lblIntRecipientAddress" class="int-text-block"></div>
+                                <div class="int-phone-text">Mobile: <span id="lblIntRecipientMobile"></span></div>
+                                <div class="int-phone-text">E-mail: <span id="lblIntRecipientEmail"></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Product Title -->
+                        <div class="int-prod-title">PRODUCT DETAILS</div>
+
+                        <!-- Product Table -->
+                        <table class="int-table">
+                            <thead>
+                                <tr>
+                                    <th>DESCRIPTION OF GOODS</th>
+                                    <th>HSN CODE</th>
+                                    <th>QTY</th>
+                                    <th>UNIT VALUE</th>
+                                    <th>TOTAL VALUE</th>
+                                    <th>COUNTRY OF ORIGIN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="lblIntProdDesc"></td>
+                                    <td id="lblIntProdHSN" style="text-align: center;"></td>
+                                    <td id="lblIntProdQty" style="text-align: center;"></td>
+                                    <td id="lblIntProdUnit" style="text-align: center;"></td>
+                                    <td id="lblIntProdTotal" style="text-align: center;"></td>
+                                    <td id="lblIntProdOrigin" style="text-align: center;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- VAT and Customs Details -->
+                        <table class="int-table int-customs-table">
+                            <tr>
+                                <td style="width: 28%;">
+                                    <div class="int-custom-header">IOSS NUMBER: <span class="int-custom-value" id="lblIntIoss"></span></div>
+                                </td>
+                                <td style="width: 28%; text-align: center;">
+                                    <div class="int-custom-header">VAT COLLECTED BY ETSY</div>
+                                    <div class="int-vat-msg" id="lblIntVatMsg"></div>
+                                </td>
+                                <td style="width: 22%; text-align: center;">
+                                    <div class="int-custom-header">CURRENCY:</div>
+                                    <div class="int-custom-value" id="lblIntCurrency"></div>
+                                </td>
+                                <td style="width: 22%; text-align: center;">
+                                    <div class="int-custom-header">NET WEIGHT:</div>
+                                    <div class="int-custom-value" id="lblIntWeight"></div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Bottom Footer -->
+                        <div class="int-footer">
+                            <div class="int-footer-left">
+                                <div class="int-fragile-box">
+                                    <i class="fa-solid fa-wine-glass"></i>
+                                </div>
+                                <div class="int-fragile-text">
+                                    <strong>FRAGILE</strong><br>HANDLE WITH CARE
+                                </div>
+                            </div>
+                            <div class="int-footer-center">
+                                MADE IN INDIA
+                            </div>
+                            <div class="int-footer-right">
+                                <svg id="barcode-international"></svg>
+                                <div class="int-order-no">ORDER NO: <span id="lblIntOrderNo"></span></div>
+                            </div>
+                        </div>
+
+                    </div> <!-- End Int Label -->
+
                 </div>
             </section>
         </main>
