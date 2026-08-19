@@ -10,7 +10,7 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.1">
     <!-- html2canvas and JsBarcode -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
@@ -250,8 +250,8 @@
                                         <i class="fa-solid fa-location-dot"></i>
                                         <span id="lblRecipientAddress"></span>
                                     </div>
-                                    <div class="dotted-divider" id="divRecipientPhone"></div>
-                                    <div class="info-row" id="rowRecipientPhone">
+                                    <div class="dotted-divider" id="divRecipientPhone" style="display: none;"></div>
+                                    <div class="info-row" id="rowRecipientPhone" style="display: none;">
                                         <i class="fa-solid fa-phone"></i>
                                         <span>Phone: &nbsp;&nbsp;<strong id="lblRecipientPhone">7022111529</strong></span>
                                     </div>
@@ -295,8 +295,8 @@
                                 <div class="int-header">TO:</div>
                                 <div id="lblIntRecipientName" class="int-large-text">Henrik Boddum</div>
                                 <div id="lblIntRecipientAddress" class="int-text-block"></div>
-                                <div class="int-phone-text" id="rowIntRecipientMobile">Mobile: <span id="lblIntRecipientMobile"></span></div>
-                                <div class="int-phone-text" id="rowIntRecipientEmail">E-mail: <span id="lblIntRecipientEmail"></span></div>
+                                <div class="int-phone-text" id="rowIntRecipientMobile" style="display: none;">Mobile: <span id="lblIntRecipientMobile"></span></div>
+                                <div class="int-phone-text" id="rowIntRecipientEmail" style="display: none;">E-mail: <span id="lblIntRecipientEmail"></span></div>
                             </div>
                         </div>
 
@@ -371,6 +371,6 @@
             </section>
         </main>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js?v=1.1"></script>
 </body>
 </html>
