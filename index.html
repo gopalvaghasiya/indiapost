@@ -121,10 +121,7 @@
                         <label>Description of Goods</label>
                         <textarea id="intProdDesc" rows="4" oninput="updateIntLabel()"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>HSN Code</label>
-                        <input type="text" id="intProdHSN" value="" oninput="updateIntLabel()">
-                    </div>
+
                     <div class="form-group">
                         <label>QTY</label>
                         <input type="text" id="intProdQty" value="" oninput="updateIntLabel()">
@@ -225,8 +222,8 @@
                                         <i class="fa-solid fa-location-dot"></i>
                                         <span id="lblSenderAddress"></span>
                                     </div>
-                                    <div class="dotted-divider"></div>
-                                    <div class="info-row">
+                                    <div class="dotted-divider" id="divSenderMobile"></div>
+                                    <div class="info-row" id="rowSenderMobile">
                                         <i class="fa-solid fa-phone"></i>
                                         <span>From Sender mobile number : <strong id="lblSenderMobile">7984115219</strong></span>
                                     </div>
@@ -253,8 +250,8 @@
                                         <i class="fa-solid fa-location-dot"></i>
                                         <span id="lblRecipientAddress"></span>
                                     </div>
-                                    <div class="dotted-divider"></div>
-                                    <div class="info-row">
+                                    <div class="dotted-divider" id="divRecipientPhone"></div>
+                                    <div class="info-row" id="rowRecipientPhone">
                                         <i class="fa-solid fa-phone"></i>
                                         <span>Phone: &nbsp;&nbsp;<strong id="lblRecipientPhone">7022111529</strong></span>
                                     </div>
@@ -292,14 +289,14 @@
                                 <div id="lblIntSenderName" class="int-large-text">SHREEJA DIVINE PRODUCTS</div>
                                 <div id="lblIntSenderSub" class="int-bold-text">Solanki Vishalbhai Arvindbhai</div>
                                 <div id="lblIntSenderAddress" class="int-text-block"></div>
-                                <div class="int-phone-text">Phone: <span id="lblIntSenderPhone"></span></div>
+                                <div class="int-phone-text" id="rowIntSenderPhone">Phone: <span id="lblIntSenderPhone"></span></div>
                             </div>
                             <div class="int-right">
                                 <div class="int-header">TO:</div>
                                 <div id="lblIntRecipientName" class="int-large-text">Henrik Boddum</div>
                                 <div id="lblIntRecipientAddress" class="int-text-block"></div>
-                                <div class="int-phone-text">Mobile: <span id="lblIntRecipientMobile"></span></div>
-                                <div class="int-phone-text">E-mail: <span id="lblIntRecipientEmail"></span></div>
+                                <div class="int-phone-text" id="rowIntRecipientMobile">Mobile: <span id="lblIntRecipientMobile"></span></div>
+                                <div class="int-phone-text" id="rowIntRecipientEmail">E-mail: <span id="lblIntRecipientEmail"></span></div>
                             </div>
                         </div>
 
@@ -311,7 +308,6 @@
                             <thead>
                                 <tr>
                                     <th>DESCRIPTION OF GOODS</th>
-                                    <th>HSN CODE</th>
                                     <th>QTY</th>
                                     <th>UNIT VALUE</th>
                                     <th>TOTAL VALUE</th>
@@ -321,7 +317,6 @@
                             <tbody>
                                 <tr>
                                     <td id="lblIntProdDesc"></td>
-                                    <td id="lblIntProdHSN" style="text-align: center;"></td>
                                     <td id="lblIntProdQty" style="text-align: center;"></td>
                                     <td id="lblIntProdUnit" style="text-align: center;"></td>
                                     <td id="lblIntProdTotal" style="text-align: center;"></td>

@@ -42,11 +42,21 @@ function updateLabel() {
     document.getElementById('lblSenderAddress').innerHTML = senderAddress.replace(/\n/g, '<br>');
     document.getElementById('lblSenderMobile').textContent = senderMobile;
 
+    const rowSenderMobile = document.getElementById('rowSenderMobile');
+    const divSenderMobile = document.getElementById('divSenderMobile');
+    if (rowSenderMobile) rowSenderMobile.style.display = senderMobile.trim() ? 'flex' : 'none';
+    if (divSenderMobile) divSenderMobile.style.display = senderMobile.trim() ? 'block' : 'none';
+
     // Update Recipient Details
     document.getElementById('lblRecipientName').textContent = recipientName;
     document.getElementById('lblRecipientCompany').textContent = recipientCompany;
     document.getElementById('lblRecipientAddress').innerHTML = recipientAddress.replace(/\n/g, '<br>');
     document.getElementById('lblRecipientPhone').textContent = recipientPhone;
+
+    const rowRecipientPhone = document.getElementById('rowRecipientPhone');
+    const divRecipientPhone = document.getElementById('divRecipientPhone');
+    if (rowRecipientPhone) rowRecipientPhone.style.display = recipientPhone.trim() ? 'flex' : 'none';
+    if (divRecipientPhone) divRecipientPhone.style.display = recipientPhone.trim() ? 'block' : 'none';
 
     // Generate Barcode
     try {
@@ -68,17 +78,34 @@ function updateIntLabel() {
     document.getElementById('lblIntSenderName').textContent = document.getElementById('intSenderName').value;
     document.getElementById('lblIntSenderSub').textContent = document.getElementById('intSenderSub').value;
     document.getElementById('lblIntSenderAddress').innerHTML = document.getElementById('intSenderAddress').value.replace(/\n/g, '<br>');
-    document.getElementById('lblIntSenderPhone').textContent = document.getElementById('intSenderPhone').value;
+    
+    const intSenderPhoneVal = document.getElementById('intSenderPhone').value;
+    document.getElementById('lblIntSenderPhone').textContent = intSenderPhoneVal;
+    const rowIntSenderPhone = document.getElementById('rowIntSenderPhone');
+    if (rowIntSenderPhone) {
+        rowIntSenderPhone.style.display = intSenderPhoneVal.trim() ? 'block' : 'none';
+    }
 
     // Recipient
     document.getElementById('lblIntRecipientName').textContent = document.getElementById('intRecipientName').value;
     document.getElementById('lblIntRecipientAddress').innerHTML = document.getElementById('intRecipientAddress').value.replace(/\n/g, '<br>');
-    document.getElementById('lblIntRecipientMobile').textContent = document.getElementById('intRecipientMobile').value;
-    document.getElementById('lblIntRecipientEmail').textContent = document.getElementById('intRecipientEmail').value;
+    
+    const intRecipientMobileVal = document.getElementById('intRecipientMobile').value;
+    document.getElementById('lblIntRecipientMobile').textContent = intRecipientMobileVal;
+    const rowIntRecipientMobile = document.getElementById('rowIntRecipientMobile');
+    if (rowIntRecipientMobile) {
+        rowIntRecipientMobile.style.display = intRecipientMobileVal.trim() ? 'block' : 'none';
+    }
+
+    const intRecipientEmailVal = document.getElementById('intRecipientEmail').value;
+    document.getElementById('lblIntRecipientEmail').textContent = intRecipientEmailVal;
+    const rowIntRecipientEmail = document.getElementById('rowIntRecipientEmail');
+    if (rowIntRecipientEmail) {
+        rowIntRecipientEmail.style.display = intRecipientEmailVal.trim() ? 'block' : 'none';
+    }
 
     // Product
     document.getElementById('lblIntProdDesc').innerHTML = document.getElementById('intProdDesc').value.replace(/\n/g, '<br>');
-    document.getElementById('lblIntProdHSN').innerHTML = document.getElementById('intProdHSN').value.replace(/\n/g, '<br>');
     document.getElementById('lblIntProdQty').textContent = document.getElementById('intProdQty').value;
     document.getElementById('lblIntProdUnit').textContent = document.getElementById('intProdUnit').value;
     document.getElementById('lblIntProdTotal').textContent = document.getElementById('intProdTotal').value;
