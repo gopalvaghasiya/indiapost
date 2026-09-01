@@ -148,7 +148,7 @@ function updateIntLabel() {
     document.getElementById('lblIntProdQty').textContent = document.getElementById('intProdQty').value;
     document.getElementById('lblIntProdUnit').textContent = document.getElementById('intProdUnit').value;
     document.getElementById('lblIntProdTotal').textContent = document.getElementById('intProdTotal').value;
-    document.getElementById('lblIntProdOrigin').textContent = document.getElementById('intProdOrigin').value;
+    document.getElementById('lblIntProdOrigin').textContent = 'INDIA';
 
     // Customs
     const chkIoss = document.getElementById('chkIncludeIoss');
