@@ -1,10 +1,10 @@
 // Current active tab state
-let currentTab = 'domestic';
+let currentTab = 'international';
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    updateLabel();
     updateIntLabel();
+    updateLabel();
 });
 
 // Tab switching logic
@@ -21,15 +21,27 @@ function switchTab(tabName) {
     document.getElementById('form-international').style.display = tabName === 'international' ? 'block' : 'none';
 
     // Update label previews
-    document.getElementById('labelPreview-domestic').style.display = tabName === 'domestic' ? 'flex' : 'none';
-    document.getElementById('labelPreview-international').style.display = tabName === 'international' ? 'flex' : 'none';
+    const domesticPreview = document.getElementById('labelPreview-domestic');
+    const intPreview = document.getElementById('labelPreview-international');
 
-    // Re-trigger label updates to ensure correct display state
     if (tabName === 'domestic') {
+        domesticPreview.style.display = 'flex';
+        domesticPreview.classList.add('active-label');
+        intPreview.style.display = 'none';
+        intPreview.classList.remove('active-label');
         updateLabel();
     } else {
+        intPreview.style.display = 'flex';
+        intPreview.classList.add('active-label');
+        domesticPreview.style.display = 'none';
+        domesticPreview.classList.remove('active-label');
         updateIntLabel();
     }
+}
+
+// Print active label (6x4 inch)
+function printLabel() {
+    window.print();
 }
 
 // Update DOMESTIC label
