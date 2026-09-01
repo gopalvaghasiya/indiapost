@@ -91,6 +91,26 @@ function updateLabel() {
     }
 }
 
+// Toggle IOSS field visibility in form & label
+function toggleIossField() {
+    const chk = document.getElementById('chkIncludeIoss');
+    const group = document.getElementById('groupIntIoss');
+    if (group && chk) {
+        group.style.display = chk.checked ? 'block' : 'none';
+    }
+    updateIntLabel();
+}
+
+// Toggle VAT field visibility in form & label
+function toggleVatField() {
+    const chk = document.getElementById('chkIncludeVat');
+    const group = document.getElementById('groupIntVat');
+    if (group && chk) {
+        group.style.display = chk.checked ? 'block' : 'none';
+    }
+    updateIntLabel();
+}
+
 // Update INTERNATIONAL label
 function updateIntLabel() {
     // Sender
@@ -131,6 +151,18 @@ function updateIntLabel() {
     document.getElementById('lblIntProdOrigin').textContent = document.getElementById('intProdOrigin').value;
 
     // Customs
+    const chkIoss = document.getElementById('chkIncludeIoss');
+    const chkVat = document.getElementById('chkIncludeVat');
+    const tdIntIoss = document.getElementById('tdIntIoss');
+    const tdIntVat = document.getElementById('tdIntVat');
+
+    if (tdIntIoss && chkIoss) {
+        tdIntIoss.style.display = chkIoss.checked ? 'table-cell' : 'none';
+    }
+    if (tdIntVat && chkVat) {
+        tdIntVat.style.display = chkVat.checked ? 'table-cell' : 'none';
+    }
+
     document.getElementById('lblIntIoss').textContent = document.getElementById('intIoss').value;
     document.getElementById('lblIntVatMsg').innerHTML = document.getElementById('intVatMsg').value.replace(/\n/g, '<br>');
     document.getElementById('lblIntCurrency').textContent = document.getElementById('intCurrency').value;
