@@ -109,22 +109,50 @@ body {
     margin: 2rem 0;
 }
 
-.btn-primary {
+/* ================== BUTTON GROUPS & ACTION BUTTONS ================== */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+
+.button-group button,
+.btn-primary,
+.btn-excel,
+.btn-secondary {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     width: 100%;
-    padding: 1rem;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
     font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 1.5rem;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.button-group button:hover,
+.btn-primary:hover,
+.btn-excel:hover,
+.btn-secondary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.button-group button:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: 1px solid #1d4ed8;
+    margin-top: 0;
 }
 
 .btn-primary:hover {
@@ -132,21 +160,10 @@ body {
 }
 
 .btn-excel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 1rem;
     background-color: #107c41;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    margin-top: 0.75rem;
+    color: #ffffff;
+    border: 1px solid #0b6132;
+    margin-top: 0;
 }
 
 .btn-excel:hover {
@@ -154,8 +171,6 @@ body {
 }
 
 .btn-secondary {
-    display: flex;
-    align-items: center;
     justify-content: center;
     gap: 0.5rem;
     width: 100%;
@@ -697,42 +712,7 @@ body {
     accent-color: var(--primary-color);
 }
 
-/* ================== BUTTON GROUPS & SECONDARY BUTTONS ================== */
-.button-group {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-}
 
-.button-group .btn-primary,
-.button-group .btn-secondary {
-    flex: 1;
-    margin-top: 0;
-    padding: 0.75rem 0.5rem;
-    font-size: 0.9rem;
-    white-space: nowrap;
-}
-
-.btn-secondary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 1rem;
-    background-color: #059669;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-secondary:hover {
-    background-color: #047857;
-}
 
 .preview-actions {
     display: flex;
