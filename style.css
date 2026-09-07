@@ -131,6 +131,50 @@ body {
     background-color: #1d4ed8;
 }
 
+.btn-excel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: #107c41;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 0.75rem;
+}
+
+.btn-excel:hover {
+    background-color: #0e6435;
+}
+
+.btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 0.75rem;
+}
+
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
 /* Preview Section */
 .preview-section {
     flex: 2;
