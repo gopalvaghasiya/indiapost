@@ -285,25 +285,35 @@ async function downloadExcelSheet() {
         }
 
         function setXmlCell(xmlStr, cellRef, val) {
-            const pattern = new RegExp(`(<c r="${cellRef}"[^>]*>)(.*?)(</c>)`, 's');
+            const pattern = new RegExp(`<c r="${cellRef}"(?:\\s+[^/>]*)?(?:/>|>(?:.*?)</c>)`, 's');
             const match = xmlStr.match(pattern);
 
             if (!match) return xmlStr;
 
-            let openTag = match[1];
-            openTag = openTag.replace(/\s+t="[^"]*"/g, '');
+            const fullMatch = match[0];
+            const sMatch = fullMatch.match(/\s+s="([^"]*)"/);
+            const sAttr = sMatch ? ` s="${sMatch[1]}"` : '';
 
-            let inner = '';
-            if (val === null || val === undefined || val === '') {
-                inner = '';
-            } else if (typeof val === 'number') {
-                inner = `<v>${val}</v>`;
-            } else {
-                openTag = openTag.replace(/>$/, ' t="inlineStr">');
-                inner = `<is><t>${escapeXml(val)}</t></is>`;
+            function escapeXml(s) {
+                if (s === null || s === undefined) return '';
+                return String(s)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&apos;');
             }
 
-            return xmlStr.replace(pattern, `${openTag}${inner}</c>`);
+            let newCell = '';
+            if (val === null || val === undefined || val === '') {
+                newCell = `<c r="${cellRef}"${sAttr}/>`;
+            } else if (typeof val === 'number') {
+                newCell = `<c r="${cellRef}"${sAttr}><v>${val}</v></c>`;
+            } else {
+                newCell = `<c r="${cellRef}"${sAttr} t="inlineStr"><is><t>${escapeXml(val)}</t></is></c>`;
+            }
+
+            return xmlStr.substring(0, match.index) + newCell + xmlStr.substring(match.index + fullMatch.length);
         }
 
         // 4. Update ArticleDetails (sheet1.xml)
