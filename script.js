@@ -300,19 +300,19 @@ async function downloadExcelSheet() {
 
     try {
         // 1. Gather dynamic form values
-        const recipientName = document.getElementById('intRecipientName').value.trim() || 'SARAH SHAPIRO';
+        const recipientName = document.getElementById('intRecipientName').value.trim();
         const recipientAddressRaw = document.getElementById('intRecipientAddress').value.trim();
-        const recipientMobile = document.getElementById('intRecipientMobile').value.trim() || '13234964386';
-        const recipientEmail = document.getElementById('intRecipientEmail').value.trim() || '';
+        const recipientMobile = document.getElementById('intRecipientMobile').value.trim();
+        const recipientEmail = document.getElementById('intRecipientEmail').value.trim();
 
-        const prodTotal = parseFloat(document.getElementById('intProdTotal').value.trim()) || 1350;
-        const weightVal = parseFloat(document.getElementById('intWeight').value.trim()) || 225;
+        const prodTotal = parseFloat(document.getElementById('intProdTotal').value.trim()) || 0;
+        const weightVal = parseFloat(document.getElementById('intWeight').value.trim()) || 0;
         const netWeightVal = weightVal > 25 ? (weightVal - 25) : weightVal;
 
-        const iossVal = document.getElementById('intIoss').value.trim() || '';
-        const vatMsgVal = document.getElementById('intVatMsg').value.trim() || '';
-        const orderNo = document.getElementById('intOrderNo').value.trim() || '1234';
-        const barcodeVal = document.getElementById('intBarcodeValue').value.trim() || 'LP255987561IN';
+        const iossVal = document.getElementById('intIoss').value.trim();
+        const vatMsgVal = document.getElementById('intVatMsg').value.trim();
+        const orderNo = document.getElementById('intOrderNo').value.trim();
+        const barcodeVal = document.getElementById('intBarcodeValue').value.trim();
 
         // 2. Parse Recipient Address
         const parsedAddr = parseRecipientAddress(recipientAddressRaw);
@@ -374,7 +374,7 @@ async function downloadExcelSheet() {
         sheet1Xml = setXmlCell(sheet1Xml, 'AH2', recipientMobile);
         sheet1Xml = setXmlCell(sheet1Xml, 'AI2', vatMsgVal);
         sheet1Xml = setXmlCell(sheet1Xml, 'AK2', barcodeVal);
-        sheet1Xml = setXmlCell(sheet1Xml, 'AM2', recipientMobile ? recipientMobile : '');
+        sheet1Xml = setXmlCell(sheet1Xml, 'AM2', '');
 
         // 5. Update ONLY Dynamic (Non-Yellow) Columns in SubPieces (sheet2.xml)
         // Yellow columns in SubPieces: B (HS Code), C (HS Description), D (Unit CD),
