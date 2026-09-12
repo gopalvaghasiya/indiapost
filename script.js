@@ -292,9 +292,7 @@ function updateIntLabel() {
     document.getElementById('lblIntIoss').textContent = document.getElementById('intIoss').value;
     document.getElementById('lblIntVatMsg').innerHTML = document.getElementById('intVatMsg').value.replace(/\n/g, '<br>');
     document.getElementById('lblIntCurrency').textContent = document.getElementById('intCurrency').value;
-    
-    const intWeightRaw = document.getElementById('intWeight').value;
-    document.getElementById('lblIntWeight').textContent = formatWeightInKg(intWeightRaw);
+    document.getElementById('lblIntWeight').textContent = document.getElementById('intWeight').value;
 
     // Order No
     const orderNo = document.getElementById('intOrderNo').value;
@@ -328,7 +326,6 @@ function updateCN22() {
     const prodTotal = document.getElementById('intProdTotal') ? document.getElementById('intProdTotal').value : '';
     const currency = document.getElementById('intCurrency') ? document.getElementById('intCurrency').value : 'INR';
     const weight = document.getElementById('intWeight') ? document.getElementById('intWeight').value : '';
-    const formattedWeight = formatWeightInKg(weight);
     const hsTariff = document.getElementById('intHsTariff') ? document.getElementById('intHsTariff').value : '44209090';
     const senderSub = document.getElementById('intSenderSub') ? document.getElementById('intSenderSub').value : '';
     const senderName = document.getElementById('intSenderName') ? document.getElementById('intSenderName').value : '';
@@ -370,7 +367,7 @@ function updateCN22() {
     // Net Weight
     const lblNetWeight = document.getElementById('lblCn22NetWeight');
     if (lblNetWeight) {
-        lblNetWeight.textContent = formattedWeight;
+        lblNetWeight.textContent = weight;
     }
 
     // Value and currency
@@ -390,7 +387,7 @@ function updateCN22() {
     // Total Weight
     const lblTotalWeight = document.getElementById('lblCn22TotalWeight');
     if (lblTotalWeight) {
-        lblTotalWeight.textContent = formattedWeight;
+        lblTotalWeight.textContent = weight;
     }
 
     // Total Value
