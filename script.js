@@ -279,14 +279,14 @@ function updateIntLabel() {
 // Update CN 22 Customs Declaration Sticker fields
 function updateCN22() {
     const operator = document.getElementById('intOperator') ? document.getElementById('intOperator').value : 'India Post';
-    const category = document.getElementById('intCategory') ? document.getElementById('intCategory').value : 'Sale of goods';
+    const category = document.getElementById('intCategory') ? document.getElementById('intCategory').value : 'Gift';
     const categoryOther = document.getElementById('intCategoryOther') ? document.getElementById('intCategoryOther').value : '';
-    const prodDesc = document.getElementById('intProdDesc') ? document.getElementById('intProdDesc').value : '';
+    const prodDesc = document.getElementById('intProdDesc') ? document.getElementById('intProdDesc').value : 'wooden stick';
     const prodQty = document.getElementById('intProdQty') ? document.getElementById('intProdQty').value : '';
     const prodTotal = document.getElementById('intProdTotal') ? document.getElementById('intProdTotal').value : '';
-    const currency = document.getElementById('intCurrency') ? document.getElementById('intCurrency').value : 'USD';
+    const currency = document.getElementById('intCurrency') ? document.getElementById('intCurrency').value : 'INR';
     const weight = document.getElementById('intWeight') ? document.getElementById('intWeight').value : '';
-    const hsTariff = document.getElementById('intHsTariff') ? document.getElementById('intHsTariff').value : '7117.90';
+    const hsTariff = document.getElementById('intHsTariff') ? document.getElementById('intHsTariff').value : '44209090';
     const senderSub = document.getElementById('intSenderSub') ? document.getElementById('intSenderSub').value : '';
     const senderName = document.getElementById('intSenderName') ? document.getElementById('intSenderName').value : '';
 

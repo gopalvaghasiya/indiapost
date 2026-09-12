@@ -126,7 +126,7 @@
                     <h2><i class="fa-solid fa-box"></i> Product Details</h2>
                     <div class="form-group">
                         <label>Description of Goods</label>
-                        <textarea id="intProdDesc" rows="4" oninput="updateIntLabel()"></textarea>
+                        <textarea id="intProdDesc" rows="4" oninput="updateIntLabel()">wooden stick</textarea>
                     </div>
 
                     <div class="form-group">
@@ -169,7 +169,7 @@
                     </div>
                     <div class="form-group">
                         <label>Currency</label>
-                        <input type="text" id="intCurrency" value="" oninput="updateIntLabel()">
+                        <input type="text" id="intCurrency" value="INR" oninput="updateIntLabel()">
                     </div>
                     <div class="form-group">
                         <label>Net Weight (in kg)</label>
@@ -177,7 +177,7 @@
                     </div>
                     <div class="form-group">
                         <label>HS Tariff Number</label>
-                        <input type="text" id="intHsTariff" value="7117.90" oninput="updateIntLabel()">
+                        <input type="text" id="intHsTariff" value="44209090" oninput="updateIntLabel()">
                     </div>
                     <div class="form-group">
                         <label>Designated Operator</label>
@@ -186,8 +186,8 @@
                     <div class="form-group">
                         <label>Category of Item (CN 22)</label>
                         <select id="intCategory" class="form-select" onchange="toggleCn22Other(); updateIntLabel();">
-                            <option value="Sale of goods" selected>Sale of goods</option>
-                            <option value="Gift">Gift</option>
+                            <option value="Gift" selected>Gift</option>
+                            <option value="Sale of goods">Sale of goods</option>
                             <option value="Documents">Documents</option>
                             <option value="Commercial sample">Commercial sample</option>
                             <option value="Returned goods">Returned goods</option>
@@ -465,7 +465,7 @@
                         <div class="cn22-category-grid">
                             <div class="cn22-cat-col">
                                 <div class="cn22-checkbox-item">
-                                    <span class="cn22-box" id="boxGift"></span>
+                                    <span class="cn22-box" id="boxGift">✓</span>
                                     <span>Gift</span>
                                 </div>
                                 <div class="cn22-checkbox-item">
@@ -473,7 +473,7 @@
                                     <span>Documents</span>
                                 </div>
                                 <div class="cn22-checkbox-item">
-                                    <span class="cn22-box" id="boxSaleOfGoods">✓</span>
+                                    <span class="cn22-box" id="boxSaleOfGoods"></span>
                                     <span>Sale of goods</span>
                                 </div>
                             </div>
