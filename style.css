@@ -975,10 +975,10 @@ body {
     font-size: 15px;
 }
 
-/* ================== PRINT STYLES (6 x 4 INCH STICKER) ================== */
+/* ================== PRINT STYLES (6 x 4 INCH THERMAL PRINTER) ================== */
 @media print {
     @page {
-        size: 6in 4in landscape;
+        size: 6in 4in;
         margin: 0;
     }
 
@@ -1009,6 +1009,9 @@ body {
     .badge,
     .btn-primary,
     .btn-secondary,
+    .btn-cn22-print,
+    .btn-cn22-download,
+    .btn-excel,
     .btn-print-sm {
         display: none !important;
     }
@@ -1032,16 +1035,16 @@ body {
         left: 0 !important;
     }
 
-    /* Active label printing container (positioned with safe margins to prevent printer clipping) */
+    /* Active label printing container (optimized for 6x4 thermal label rolls) */
     .label-wrapper.active-label,
     .int-label-wrapper.active-label,
     .cn22-label-wrapper.active-label {
         visibility: visible !important;
         position: absolute !important;
-        top: 0.08in !important;
-        left: 0.15in !important;
-        width: 5.7in !important;
-        height: 3.84in !important;
+        top: 0.05in !important;
+        left: 0.1in !important;
+        width: 5.8in !important;
+        height: 3.9in !important;
         box-sizing: border-box !important;
         border: 2px solid #000000 !important;
         border-radius: 0 !important;
@@ -1051,8 +1054,10 @@ body {
         flex-direction: column !important;
         justify-content: space-between !important;
         background: #ffffff !important;
-        page-break-after: avoid !important;
         page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
         overflow: hidden !important;
     }
 
@@ -1329,54 +1334,59 @@ body {
         margin-top: 1px !important;
     }
 
-    /* --- CN 22 CUSTOMS DECLARATION PRINT FIT (6" x 4") --- */
+    /* --- CN 22 CUSTOMS DECLARATION PRINT FIT (6" x 4" THERMAL) --- */
     .cn22-label-wrapper.active-label .cn22-header-top {
-        padding: 2px 8px !important;
-        border-bottom: 1.5px solid #000 !important;
+        padding: 4px 10px !important;
+        border-bottom: 2px solid #000000 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-title-main {
-        font-size: 13px !important;
-        line-height: 1 !important;
+        font-size: 15px !important;
+        line-height: 1.05 !important;
+        font-weight: 900 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-title-sub {
-        font-size: 10px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-title-code {
-        font-size: 20px !important;
+        font-size: 26px !important;
+        font-weight: 900 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-operator-row {
-        border-bottom: 1.5px solid #000 !important;
+        border-bottom: 2px solid #000000 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-operator-left,
     .cn22-label-wrapper.active-label .cn22-operator-right {
-        padding: 2px 6px !important;
+        padding: 3px 8px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-sub-label {
-        font-size: 8px !important;
-    }
-
-    .cn22-label-wrapper.active-label .cn22-operator-name {
         font-size: 9px !important;
     }
 
+    .cn22-label-wrapper.active-label .cn22-operator-name {
+        font-size: 11px !important;
+        font-weight: 800 !important;
+    }
+
     .cn22-label-wrapper.active-label .cn22-operator-right {
-        font-size: 7px !important;
-        line-height: 1.1 !important;
+        font-size: 8px !important;
+        line-height: 1.15 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-operator-right strong {
-        font-size: 8px !important;
+        font-size: 9px !important;
+        font-weight: 800 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-category-grid {
-        padding: 2px 6px !important;
-        border-bottom: 1.5px solid #000 !important;
+        padding: 3px 8px !important;
+        border-bottom: 2px solid #000000 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-cat-col {
@@ -1385,71 +1395,80 @@ body {
     }
 
     .cn22-label-wrapper.active-label .cn22-checkbox-item {
-        font-size: 8px !important;
-        gap: 4px !important;
+        font-size: 9.5px !important;
+        font-weight: 600 !important;
+        gap: 5px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-box {
-        width: 10px !important;
-        height: 10px !important;
-        font-size: 8px !important;
-        border-width: 1px !important;
+        width: 12px !important;
+        height: 12px !important;
+        font-size: 10px !important;
+        font-weight: 900 !important;
+        border-width: 1.5px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-table th,
     .cn22-label-wrapper.active-label .cn22-table td {
-        padding: 2px 4px !important;
-        border-bottom: 1.5px solid #000 !important;
-        border-right: 1.5px solid #000 !important;
+        padding: 3px 5px !important;
+        border-bottom: 2px solid #000000 !important;
+        border-right: 2px solid #000000 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-table th {
-        font-size: 7px !important;
-        line-height: 1.1 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        line-height: 1.15 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-data-row td {
-        height: 40px !important;
-        font-size: 8px !important;
+        height: 48px !important;
+        font-size: 9.5px !important;
+        font-weight: 600 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-item-desc {
-        font-size: 8px !important;
-        line-height: 1.15 !important;
+        font-size: 9.5px !important;
+        line-height: 1.2 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-total-wt-label,
     .cn22-label-wrapper.active-label .cn22-total-val-label {
-        font-size: 7px !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-total-wt-val,
     .cn22-label-wrapper.active-label .cn22-total-val-val {
-        font-size: 9px !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
         margin-top: 1px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-footer {
-        padding: 3px 6px !important;
+        padding: 4px 8px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-legal-text {
-        font-size: 6.5px !important;
-        line-height: 1.1 !important;
+        font-size: 7.5px !important;
+        line-height: 1.15 !important;
         margin-bottom: 3px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-signature-block {
-        padding-top: 2px !important;
+        border-top: 1px solid #000000 !important;
+        padding-top: 3px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-sig-title {
-        font-size: 7px !important;
-        margin-bottom: 1px !important;
+        font-size: 8px !important;
+        font-weight: 800 !important;
+        margin-bottom: 2px !important;
     }
 
     .cn22-label-wrapper.active-label .cn22-sig-content {
-        font-size: 8px !important;
+        font-size: 9.5px !important;
+        font-weight: 600 !important;
     }
 }
 
