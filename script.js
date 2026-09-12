@@ -384,10 +384,10 @@ function updateCN22() {
     const lblOrigin = document.getElementById('lblCn22Origin');
     if (lblOrigin) lblOrigin.textContent = 'INDIA';
 
-    // Total Weight
+    // Total Weight (in kg)
     const lblTotalWeight = document.getElementById('lblCn22TotalWeight');
     if (lblTotalWeight) {
-        lblTotalWeight.textContent = weight;
+        lblTotalWeight.textContent = formatWeightInKg(weight);
     }
 
     // Total Value
