@@ -1,5 +1,6 @@
 // Current active tab state
 let currentTab = 'international';
+let currentIntSubTab = 'shipping'; // 'shipping' or 'cn22'
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,11 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLabel();
 });
 
-// Tab switching logic
+// Tab switching logic (Domestic vs International)
 function switchTab(tabName) {
     currentTab = tabName;
     
-    // Update buttons
+    // Update header tab buttons
     document.getElementById('tab-btn-domestic').classList.remove('active');
     document.getElementById('tab-btn-international').classList.remove('active');
     document.getElementById(`tab-btn-${tabName}`).classList.add('active');
@@ -20,28 +21,113 @@ function switchTab(tabName) {
     document.getElementById('form-domestic').style.display = tabName === 'domestic' ? 'block' : 'none';
     document.getElementById('form-international').style.display = tabName === 'international' ? 'block' : 'none';
 
+    // Sub-tabs in preview header
+    const intPreviewSubTabs = document.getElementById('intPreviewSubTabs');
+    if (intPreviewSubTabs) {
+        intPreviewSubTabs.style.display = tabName === 'international' ? 'flex' : 'none';
+    }
+
     // Update label previews
     const domesticPreview = document.getElementById('labelPreview-domestic');
     const intPreview = document.getElementById('labelPreview-international');
+    const cn22Preview = document.getElementById('labelPreview-cn22');
+    const previewMainTitle = document.getElementById('previewMainTitle');
 
     if (tabName === 'domestic') {
         domesticPreview.style.display = 'flex';
         domesticPreview.classList.add('active-label');
         intPreview.style.display = 'none';
         intPreview.classList.remove('active-label');
+        if (cn22Preview) {
+            cn22Preview.style.display = 'none';
+            cn22Preview.classList.remove('active-label');
+        }
+        if (previewMainTitle) previewMainTitle.textContent = 'Live Preview (6" × 4" Sticker)';
         updateLabel();
     } else {
-        intPreview.style.display = 'flex';
-        intPreview.classList.add('active-label');
         domesticPreview.style.display = 'none';
         domesticPreview.classList.remove('active-label');
+        switchIntPreviewSubTab(currentIntSubTab);
         updateIntLabel();
     }
 }
 
-// Print active label (6x4 inch)
-function printLabel() {
+// Switch between International Shipping Label and CN 22 Declaration in preview
+function switchIntPreviewSubTab(subTab) {
+    currentIntSubTab = subTab;
+
+    const btnShipping = document.getElementById('subtab-btn-shipping');
+    const btnCn22 = document.getElementById('subtab-btn-cn22');
+    const intPreview = document.getElementById('labelPreview-international');
+    const cn22Preview = document.getElementById('labelPreview-cn22');
+    const previewMainTitle = document.getElementById('previewMainTitle');
+
+    if (btnShipping && btnCn22) {
+        if (subTab === 'shipping') {
+            btnShipping.classList.add('active');
+            btnCn22.classList.remove('active');
+        } else {
+            btnCn22.classList.add('active');
+            btnShipping.classList.remove('active');
+        }
+    }
+
+    if (subTab === 'shipping') {
+        if (intPreview) {
+            intPreview.style.display = 'flex';
+            intPreview.classList.add('active-label');
+        }
+        if (cn22Preview) {
+            cn22Preview.style.display = 'none';
+            cn22Preview.classList.remove('active-label');
+        }
+        if (previewMainTitle) previewMainTitle.textContent = 'Live Preview (6" × 4" Sticker)';
+    } else {
+        if (cn22Preview) {
+            cn22Preview.style.display = 'flex';
+            cn22Preview.classList.add('active-label');
+        }
+        if (intPreview) {
+            intPreview.style.display = 'none';
+            intPreview.classList.remove('active-label');
+        }
+        if (previewMainTitle) previewMainTitle.textContent = 'Live Preview (CN 22 Customs Declaration)';
+        updateCN22();
+    }
+}
+
+// Print active preview
+function printActivePreview() {
     window.print();
+}
+
+// Print shipping label
+function printLabel() {
+    if (currentTab === 'international' && currentIntSubTab !== 'shipping') {
+        switchIntPreviewSubTab('shipping');
+    }
+    window.print();
+}
+
+// Print dedicated CN 22 Customs Declaration
+function printCN22() {
+    if (currentTab !== 'international') {
+        switchTab('international');
+    }
+    switchIntPreviewSubTab('cn22');
+    updateCN22();
+    setTimeout(() => {
+        window.print();
+    }, 50);
+}
+
+// Toggle 'Other' category field in CN22
+function toggleCn22Other() {
+    const catSelect = document.getElementById('intCategory');
+    const groupOther = document.getElementById('groupCn22Other');
+    if (catSelect && groupOther) {
+        groupOther.style.display = catSelect.value === 'Other' ? 'block' : 'none';
+    }
 }
 
 // Update DOMESTIC label
@@ -111,7 +197,7 @@ function toggleVatField() {
     updateIntLabel();
 }
 
-// Update INTERNATIONAL label
+// Update INTERNATIONAL label & CN 22 sticker
 function updateIntLabel() {
     // Sender
     document.getElementById('lblIntSenderName').textContent = document.getElementById('intSenderName').value;
@@ -185,6 +271,106 @@ function updateIntLabel() {
     } catch (e) {
         console.error("International barcode generation failed:", e);
     }
+
+    // Synchronize CN 22 sticker values
+    updateCN22();
+}
+
+// Update CN 22 Customs Declaration Sticker fields
+function updateCN22() {
+    const operator = document.getElementById('intOperator') ? document.getElementById('intOperator').value : 'India Post';
+    const category = document.getElementById('intCategory') ? document.getElementById('intCategory').value : 'Sale of goods';
+    const categoryOther = document.getElementById('intCategoryOther') ? document.getElementById('intCategoryOther').value : '';
+    const prodDesc = document.getElementById('intProdDesc') ? document.getElementById('intProdDesc').value : '';
+    const prodQty = document.getElementById('intProdQty') ? document.getElementById('intProdQty').value : '';
+    const prodTotal = document.getElementById('intProdTotal') ? document.getElementById('intProdTotal').value : '';
+    const currency = document.getElementById('intCurrency') ? document.getElementById('intCurrency').value : 'USD';
+    const weight = document.getElementById('intWeight') ? document.getElementById('intWeight').value : '';
+    const hsTariff = document.getElementById('intHsTariff') ? document.getElementById('intHsTariff').value : '7117.90';
+    const senderSub = document.getElementById('intSenderSub') ? document.getElementById('intSenderSub').value : '';
+    const senderName = document.getElementById('intSenderName') ? document.getElementById('intSenderName').value : '';
+
+    // Operator
+    const lblOperator = document.getElementById('lblCn22Operator');
+    if (lblOperator) lblOperator.textContent = operator || 'India Post';
+
+    // Category Checkboxes
+    const boxes = {
+        'Gift': document.getElementById('boxGift'),
+        'Documents': document.getElementById('boxDocuments'),
+        'Sale of goods': document.getElementById('boxSaleOfGoods'),
+        'Commercial sample': document.getElementById('boxCommercialSample'),
+        'Returned goods': document.getElementById('boxReturnedGoods'),
+        'Other': document.getElementById('boxOther')
+    };
+
+    Object.values(boxes).forEach(box => {
+        if (box) box.textContent = '';
+    });
+
+    if (boxes[category]) {
+        boxes[category].textContent = '✓';
+    }
+
+    const lblOtherText = document.getElementById('lblCn22OtherText');
+    if (lblOtherText) {
+        lblOtherText.textContent = category === 'Other' ? categoryOther : '';
+    }
+
+    // Description & Quantity
+    const lblDesc = document.getElementById('lblCn22ProdDesc');
+    if (lblDesc) {
+        const qtyPrefix = prodQty ? `Qty: ${prodQty} - ` : '';
+        lblDesc.innerHTML = (qtyPrefix + prodDesc).replace(/\n/g, '<br>');
+    }
+
+    // Net Weight
+    const lblNetWeight = document.getElementById('lblCn22NetWeight');
+    if (lblNetWeight) {
+        lblNetWeight.textContent = weight ? (weight.toLowerCase().includes('kg') || weight.toLowerCase().includes('g') ? weight : `${weight} kg`) : '';
+    }
+
+    // Value and currency
+    const lblVal = document.getElementById('lblCn22Value');
+    if (lblVal) {
+        lblVal.textContent = prodTotal ? `${prodTotal} ${currency}` : '';
+    }
+
+    // HS Tariff
+    const lblHs = document.getElementById('lblCn22HsTariff');
+    if (lblHs) lblHs.textContent = hsTariff;
+
+    // Origin
+    const lblOrigin = document.getElementById('lblCn22Origin');
+    if (lblOrigin) lblOrigin.textContent = 'INDIA';
+
+    // Total Weight
+    const lblTotalWeight = document.getElementById('lblCn22TotalWeight');
+    if (lblTotalWeight) {
+        lblTotalWeight.textContent = weight ? (weight.toLowerCase().includes('kg') || weight.toLowerCase().includes('g') ? weight : `${weight} kg`) : '';
+    }
+
+    // Total Value
+    const lblTotalValue = document.getElementById('lblCn22TotalValue');
+    if (lblTotalValue) {
+        lblTotalValue.textContent = prodTotal ? `${prodTotal} ${currency}` : '';
+    }
+
+    // Date
+    const lblDate = document.getElementById('lblCn22Date');
+    if (lblDate) {
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        lblDate.textContent = `${dd}/${mm}/${yyyy}`;
+    }
+
+    // Signature
+    const lblSignature = document.getElementById('lblCn22Signature');
+    if (lblSignature) {
+        lblSignature.textContent = senderSub || senderName || 'Authorized Signatory';
+    }
 }
 
 // Download the currently active label as an image
@@ -205,6 +391,37 @@ function downloadImage() {
         link.download = `india-post-${currentTab}-label-${new Date().getTime()}.png`;
         link.href = imgData;
         link.click();
+    });
+}
+
+// Download CN 22 Sticker as PNG Image
+function downloadCN22Image() {
+    const labelElement = document.getElementById('labelPreview-cn22');
+    if (!labelElement) return;
+
+    // Temporarily make sure it's rendered for html2canvas
+    const prevDisplay = labelElement.style.display;
+    labelElement.style.display = 'flex';
+    labelElement.style.transform = 'none';
+
+    updateCN22();
+
+    html2canvas(labelElement, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff'
+    }).then(canvas => {
+        labelElement.style.display = prevDisplay;
+        const imgData = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        const orderNo = document.getElementById('intOrderNo') ? document.getElementById('intOrderNo').value.trim() : '';
+        const barcodeVal = document.getElementById('intBarcodeValue') ? document.getElementById('intBarcodeValue').value.trim() : '';
+        link.download = `CN22_Customs_Declaration_${barcodeVal || orderNo || new Date().getTime()}.png`;
+        link.href = imgData;
+        link.click();
+    }).catch(err => {
+        labelElement.style.display = prevDisplay;
+        console.error('Failed to generate CN 22 image:', err);
     });
 }
 

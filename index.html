@@ -10,7 +10,7 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.2">
     <!-- html2canvas, JsBarcode, and SheetJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
@@ -172,8 +172,31 @@
                         <input type="text" id="intCurrency" value="" oninput="updateIntLabel()">
                     </div>
                     <div class="form-group">
-                        <label>Net Weight</label>
+                        <label>Net Weight (in kg)</label>
                         <input type="text" id="intWeight" value="" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>HS Tariff Number</label>
+                        <input type="text" id="intHsTariff" value="7117.90" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Designated Operator</label>
+                        <input type="text" id="intOperator" value="India Post" oninput="updateIntLabel()">
+                    </div>
+                    <div class="form-group">
+                        <label>Category of Item (CN 22)</label>
+                        <select id="intCategory" class="form-select" onchange="toggleCn22Other(); updateIntLabel();">
+                            <option value="Sale of goods" selected>Sale of goods</option>
+                            <option value="Gift">Gift</option>
+                            <option value="Documents">Documents</option>
+                            <option value="Commercial sample">Commercial sample</option>
+                            <option value="Returned goods">Returned goods</option>
+                            <option value="Other">Other (specify)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="groupCn22Other" style="display: none;">
+                        <label>Other Category Specify</label>
+                        <input type="text" id="intCategoryOther" value="" oninput="updateIntLabel()">
                     </div>
                     <div class="form-group">
                         <label>Order No</label>
@@ -186,13 +209,19 @@
 
                     <div class="button-group">
                         <button class="btn-primary" onclick="downloadImage()">
-                            <i class="fa-solid fa-download"></i> Download Label
+                            <i class="fa-solid fa-download"></i> Download Shipping Label
+                        </button>
+                        <button class="btn-secondary" onclick="printLabel()">
+                            <i class="fa-solid fa-print"></i> Print Shipping Label
+                        </button>
+                        <button class="btn-cn22-print" onclick="printCN22()">
+                            <i class="fa-solid fa-stamp"></i> Print CN 22 Customs Declaration
+                        </button>
+                        <button class="btn-cn22-download" onclick="downloadCN22Image()">
+                            <i class="fa-solid fa-file-image"></i> Download CN 22 Sticker
                         </button>
                         <button class="btn-excel" onclick="downloadExcelSheet()">
                             <i class="fa-solid fa-file-excel"></i> Download Excel Sheet
-                        </button>
-                        <button class="btn-secondary" onclick="printLabel()">
-                            <i class="fa-solid fa-print"></i> Print Label
                         </button>
                     </div>
                 </div>
@@ -201,10 +230,20 @@
             <!-- Preview Section -->
             <section class="preview-section">
                 <div class="preview-header">
-                    <h2>Live Preview (6" × 4" Sticker)</h2>
+                    <div class="preview-title-wrap">
+                        <h2 id="previewMainTitle">Live Preview (6" × 4" Sticker)</h2>
+                        <div class="sub-tabs" id="intPreviewSubTabs" style="display: flex;">
+                            <button type="button" class="sub-tab-btn active" id="subtab-btn-shipping" onclick="switchIntPreviewSubTab('shipping')">
+                                <i class="fa-solid fa-box"></i> Shipping Label
+                            </button>
+                            <button type="button" class="sub-tab-btn" id="subtab-btn-cn22" onclick="switchIntPreviewSubTab('cn22')">
+                                <i class="fa-solid fa-file-lines"></i> CN 22 Declaration
+                            </button>
+                        </div>
+                    </div>
                     <div class="preview-actions">
                         <span class="badge">Auto-updates</span>
-                        <button class="btn-print-sm" onclick="printLabel()">
+                        <button class="btn-print-sm" id="btnPreviewPrint" onclick="printActivePreview()">
                             <i class="fa-solid fa-print"></i> Print
                         </button>
                     </div>
@@ -397,10 +436,116 @@
 
                     </div> <!-- End Int Label -->
 
+                    <!-- ================= CN 22 CUSTOMS DECLARATION STICKER ================= -->
+                    <div id="labelPreview-cn22" class="cn22-label-wrapper" style="display: none;">
+                        <!-- Header -->
+                        <div class="cn22-header-top">
+                            <div class="cn22-title-block">
+                                <div class="cn22-title-main">CUSTOMS<br>DECLARATION</div>
+                            </div>
+                            <div class="cn22-title-sub">
+                                May be opened officially
+                            </div>
+                            <div class="cn22-title-code">
+                                CN 22
+                            </div>
+                        </div>
+
+                        <div class="cn22-operator-row">
+                            <div class="cn22-operator-left">
+                                <span class="cn22-sub-label">Designated operator</span>
+                                <strong id="lblCn22Operator" class="cn22-operator-name">India Post</strong>
+                            </div>
+                            <div class="cn22-operator-right">
+                                <strong>Important!</strong><br>See instructions on the back
+                            </div>
+                        </div>
+
+                        <!-- Checkboxes Row -->
+                        <div class="cn22-category-grid">
+                            <div class="cn22-cat-col">
+                                <div class="cn22-checkbox-item">
+                                    <span class="cn22-box" id="boxGift"></span>
+                                    <span>Gift</span>
+                                </div>
+                                <div class="cn22-checkbox-item">
+                                    <span class="cn22-box" id="boxDocuments"></span>
+                                    <span>Documents</span>
+                                </div>
+                                <div class="cn22-checkbox-item">
+                                    <span class="cn22-box" id="boxSaleOfGoods">✓</span>
+                                    <span>Sale of goods</span>
+                                </div>
+                            </div>
+                            <div class="cn22-cat-col">
+                                <div class="cn22-checkbox-item">
+                                    <span class="cn22-box" id="boxCommercialSample"></span>
+                                    <span>Commercial sample</span>
+                                </div>
+                                <div class="cn22-checkbox-item">
+                                    <span class="cn22-box" id="boxReturnedGoods"></span>
+                                    <span>Returned goods</span>
+                                </div>
+                                <div class="cn22-checkbox-item cn22-other-item">
+                                    <span class="cn22-box" id="boxOther"></span>
+                                    <span class="cn22-other-line">Other (please specify): <span id="lblCn22OtherText"></span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table of Contents -->
+                        <table class="cn22-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-desc">Quantity and detailed description of contents (1)</th>
+                                    <th class="col-net-wt">Net weight (2)</th>
+                                    <th class="col-val">Value and currency (3)</th>
+                                    <th class="col-hs">H S tariff number* (4)</th>
+                                    <th class="col-orig">Country of origin* (5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="cn22-data-row">
+                                    <td class="col-desc">
+                                        <div class="cn22-item-desc" id="lblCn22ProdDesc"></div>
+                                    </td>
+                                    <td class="col-net-wt" id="lblCn22NetWeight"></td>
+                                    <td class="col-val" id="lblCn22Value"></td>
+                                    <td class="col-hs" id="lblCn22HsTariff"></td>
+                                    <td class="col-orig" id="lblCn22Origin">INDIA</td>
+                                </tr>
+                                <tr class="cn22-total-row">
+                                    <td colspan="2" class="col-total-weight">
+                                        <div class="cn22-total-wt-label">Total weight <em>(in kg)</em> (6)</div>
+                                        <div class="cn22-total-wt-val" id="lblCn22TotalWeight"></div>
+                                    </td>
+                                    <td class="col-total-val">
+                                        <div class="cn22-total-val-label">Total value (7)</div>
+                                        <div class="cn22-total-val-val" id="lblCn22TotalValue"></div>
+                                    </td>
+                                    <td colspan="2" class="col-total-blank"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Declaration & Signature Footer -->
+                        <div class="cn22-footer">
+                            <p class="cn22-legal-text">
+                                I, the undersigned, whose name and address are given on the item, certify that the particulars given in this declaration are correct and that this item does not contain any dangerous article or articles prohibited by legislation or by postal or customs regulations
+                            </p>
+                            <div class="cn22-signature-block">
+                                <div class="cn22-sig-title">Date and sender’s signature (8)</div>
+                                <div class="cn22-sig-content">
+                                    <span class="cn22-sig-date">Date: <strong id="lblCn22Date"></strong></span>
+                                    <span class="cn22-sig-name">Signature: <strong id="lblCn22Signature"></strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- End CN 22 Label -->
                 </div>
             </section>
         </main>
     </div>
-    <script src="script.js?v=1.1"></script>
+    <script src="script.js?v=1.2"></script>
 </body>
 </html>
