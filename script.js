@@ -177,6 +177,25 @@ function updateLabel() {
     }
 }
 
+// Calculate Total Value = QTY * Unit Value
+function calculateTotalValue() {
+    const qtyStr = document.getElementById('intProdQty') ? document.getElementById('intProdQty').value.trim() : '';
+    const unitStr = document.getElementById('intProdUnit') ? document.getElementById('intProdUnit').value.trim() : '';
+    
+    if (qtyStr !== '' && unitStr !== '') {
+        const qty = parseFloat(qtyStr);
+        const unitVal = parseFloat(unitStr);
+        
+        if (!isNaN(qty) && !isNaN(unitVal)) {
+            const total = qty * unitVal;
+            const totalInput = document.getElementById('intProdTotal');
+            if (totalInput) {
+                totalInput.value = Number.isInteger(total) ? total : parseFloat(total.toFixed(2));
+            }
+        }
+    }
+}
+
 // Toggle IOSS field visibility in form & label
 function toggleIossField() {
     const chk = document.getElementById('chkIncludeIoss');
